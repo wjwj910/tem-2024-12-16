@@ -2,10 +2,10 @@
 
 <div th:utext="${errorMessage}"></div>
 
-<form method="POST">
-    <input type="text" name="title" placeholder="제목" th:value="${postWriteForm.title}">
+<form method="POST" th:object="${postWriteForm}">
+    <input type="text" name="title" placeholder="제목" th:value="*{title}">
     <br>
-    <textarea name="content" placeholder="내용" th:text="${postWriteForm.content}"></textarea>
+    <textarea name="content" placeholder="내용" th:text="*{content}"></textarea>
     <br>
     <button type="submit">글쓰기</button>
 </form>
