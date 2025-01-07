@@ -60,7 +60,9 @@ public class PostController {
     }
 
     @GetMapping("/write")
-    public String showWrite() {
+    public String showWrite(
+            @ModelAttribute("form") PostWriteForm form
+    ) {
         return "domain/post/post/write";
     }
 
