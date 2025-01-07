@@ -28,7 +28,14 @@ public class PostController {
             String content
     ) {
         if (title == null || title.isBlank()) {
-            return "제목을 입력하세요";
+            return """
+                    <div>%s</div>
+                    <form method="POST">
+                        <input type="text" name="title" placeholder="제목">
+                        <textarea name="content" placeholder="내용"></textarea>
+                        <button type="submit">글쓰기</button>
+                    </form>
+                    """.formatted("제목을 입력하세요");
         }
 
         if (content == null || content.isBlank()) {
