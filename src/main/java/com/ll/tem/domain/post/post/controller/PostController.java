@@ -91,7 +91,6 @@ public class PostController {
     }
 
     @PostMapping("/write")
-    @ResponseBody
     public String write(
             @Valid PostWriteForm form,
             BindingResult bindingResult
@@ -110,14 +109,12 @@ public class PostController {
                     form.content
             );
         }
-
-        return """
-                <h1>글쓰기 완료</h1>
-                
-                <div>
-                    <h2>%s</h2>
-                    <p>%s</p>
-                </div>
-                """.formatted(form.title, form.content);
+        posts.add(
+                Post.builder()
+                        .title(form.title)
+                        .content(form.content)
+                        .build()
+        );
+        return "redirect:/posts";
     }
 }
