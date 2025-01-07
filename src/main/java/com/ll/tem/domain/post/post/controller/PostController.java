@@ -34,8 +34,12 @@ public class PostController {
     @PostMapping("/write")
     @ResponseBody
     public String write(
-            @NotBlank @Length(min = 5) String title,
-            @NotBlank @Length(min = 10) String content
+            @NotBlank(message = "제목을 입력해주세요.")
+            @Length(min = 5, message = "제목을 5자 이상 입력해주세요.")
+            String title,
+            @NotBlank(message = "내용을 입력해주세요.")
+            @Length(min = 10, message = "내용을 10자 이상 입력해주세요.")
+            String content
     ) {
         return """
                 <h1>글쓰기 완료</h1>
