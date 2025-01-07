@@ -59,26 +59,24 @@ public class PostController {
         return body;
     }
 
-    @GetMapping("/write")
-    public String showWrite(
-            @ModelAttribute("form") PostWriteForm form
-    ) {
-        return "domain/post/post/write";
-    }
-
     public record PostWriteForm(
             @NotBlank(message = "01-제목을 입력해주세요.")
-            @Length(min = 5, message = "02-제목을 5자 이상 입력해주세요.")
+            @Length(min = 2, message = "02-제목을 2자 이상 입력해주세요.")
             String title,
             @NotBlank(message = "03-내용을 입력해주세요.")
-            @Length(min = 10, message = "04-내용을 10자 이상 입력해주세요.")
+            @Length(min = 2, message = "04-내용을 2자 이상 입력해주세요.")
             String content
     ) {}
 
+    @GetMapping("/write")
+    public String showWrite(PostWriteForm form) {
+        return "domain/post/post/write";
+    }
+
     @PostMapping("/write")
     public String write(
-            @ModelAttribute("form") @Valid PostWriteForm form,
-            BindingResult bindingResult,Model model) {
+            @Valid PostWriteForm form,
+            BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             String errorMessage = bindingResult.getAllErrors()
                     .stream()
