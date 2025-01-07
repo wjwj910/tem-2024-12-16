@@ -78,15 +78,6 @@ public class PostController {
             @Valid PostWriteForm form,
             BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            String errorMessage = bindingResult.getAllErrors()
-                    .stream()
-                    .map(error -> error.getDefaultMessage())
-                    .sorted()
-                    .map(message -> message.split("-", 2)[1])
-                    .collect(Collectors.joining("<br>"));
-
-            model.addAttribute("errorMessage", errorMessage);
-
             return "domain/post/post/write";
         }
         posts.add(
