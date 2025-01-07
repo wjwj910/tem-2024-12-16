@@ -27,6 +27,25 @@ public class PostController {
                     </form>
                """.formatted(errorMessage, title, content);
     }
+
+    @GetMapping
+    @ResponseBody
+    public String showList() {
+        String body = """
+                <h1>글 목록</h1>
+                
+                <ul>
+                    <li>글 3</li>
+                    <li>글 2</li>
+                    <li>글 1</li>
+                </ul>
+                
+                <a href="/posts/write">글쓰기</a>
+                """;
+
+        return body;
+    }
+
     @GetMapping("/write")
     @ResponseBody
     public String showWrite() {
