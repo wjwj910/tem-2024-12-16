@@ -1,5 +1,6 @@
 package com.ll.tem.domain.post.post.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,7 +48,7 @@ public class PostController {
     @PostMapping("/write")
     @ResponseBody
     public String write(
-            @ModelAttribute PostWriteForm form
+            @ModelAttribute @Valid PostWriteForm form
     ) {
         System.out.println("form = " + form);
 
