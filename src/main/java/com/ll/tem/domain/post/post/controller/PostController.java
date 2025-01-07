@@ -60,6 +60,17 @@ public class PostController {
                     """.formatted("내용을 입력하세요", title);
         }
 
+        if (content.length() < 10) {
+            return """
+                    <div>%s</div>
+                    <form method="POST">
+                        <input type="text" name="title" placeholder="제목" value="%s">
+                        <textarea name="content" placeholder="내용">%s</textarea>
+                        <button type="submit">글쓰기</button>
+                    </form>
+                    """.formatted("내용을 10자 이상 입력해주세요", title, content);
+        }
+
         return """
                 <h1>글쓰기 완료</h1>
                 
