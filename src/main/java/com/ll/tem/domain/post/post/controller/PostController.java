@@ -46,10 +46,8 @@ public class PostController {
     @PostMapping("/write")
     @ResponseBody
     public String write(
-            @ModelAttribute @Valid PostWriteForm form
+            @Valid PostWriteForm form
     ) {
-        System.out.println("form = " + form);
-
         return """
                 <h1>글쓰기 완료</h1>
                 
