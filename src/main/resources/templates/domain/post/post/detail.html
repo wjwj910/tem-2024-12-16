@@ -1,8 +1,18 @@
 <h1>글 상세 : <span th:text="${post.id}"></span>번</h1>
 
 <div>
-    <div th:text="${post.title}"></div>
-    <div th:text="${post.content}"></div>
+    <div>
+        제목 : <span th:text="${post.title}"></span>
+    </div>
+    <div>
+        작성 : <span th:text="${#temporals.format(post.createdAt, 'yy-MM-dd HH:mm')}"></span>
+    </div>
+    <div>
+        수정 : <span th:text="${#temporals.format(post.modifiedAt, 'yy-MM-dd HH:mm')}"></span>
+    </div>
+    <div>
+        내용 : <span th:text="${post.content}"></span>
+    </div>
 </div>
 
 <a href="/posts">글 목록</a>
