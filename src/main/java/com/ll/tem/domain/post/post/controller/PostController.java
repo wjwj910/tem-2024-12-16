@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,12 +40,12 @@ public class PostController {
     @Getter
     @ToString
     public static class PostWriteForm {
-        @NotBlank(message = "제목을 입력해주세요.")
-        @Length(min = 5, message = "제목을 5자 이상 입력해주세요.")
+        @NotBlank(message = "01-제목을 입력해주세요.")
+        @Length(min = 5, message = "02-제목을 5자 이상 입력해주세요.")
         private String title;
 
-        @NotBlank(message = "내용을 입력해주세요.")
-        @Length(min = 10, message = "내용을 10자 이상 입력해주세요.")
+        @NotBlank(message = "03-내용을 입력해주세요.")
+        @Length(min = 10, message = "04-내용을 10자 이상 입력해주세요.")
         private String content;
     }
 
@@ -60,7 +59,8 @@ public class PostController {
             String errorMessages = bindingResult.getAllErrors()
                     .stream()
                     .map(error -> error.getDefaultMessage())
-                    .sorted(Comparator.reverseOrder())
+                    .sorted()
+                    .map(message -> message.split("-", 2)[1])
                     .collect(Collectors.joining("<br>"));
 
             return getFormHtml(
