@@ -1,5 +1,6 @@
 package com.ll.tem.domain.post.post.controller;
 
+import com.ll.tem.domain.post.post.entity.Post;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -10,11 +11,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
+
+    private List<Post> posts = new ArrayList<>() {{
+        add(
+                Post.builder()
+                        .title("제목1")
+                        .content("내용1")
+                        .build()
+        );
+
+        add(
+                Post.builder()
+                        .title("제목2")
+                        .content("내용2")
+                        .build()
+        );
+
+        add(
+                Post.builder()
+                        .title("제목3")
+                        .content("내용3")
+                        .build()
+        );
+    }};
     private  String getFormHtml(String errorMessage, String title, String content) {
         return """
                 <div>%s</div>
@@ -31,17 +57,19 @@ public class PostController {
     @GetMapping
     @ResponseBody
     public String showList() {
+        String ul = "<ul>" + posts
+                .reversed()
+                .stream()
+                .map(post -> "<li>%s</li>".formatted(post.getTitle()))
+                .collect(Collectors.joining()) + "</ul>";
+
         String body = """
                 <h1>글 목록</h1>
                 
-                <ul>
-                    <li>글 3</li>
-                    <li>글 2</li>
-                    <li>글 1</li>
-                </ul>
+                %s
                 
                 <a href="/posts/write">글쓰기</a>
-                """;
+                """.formatted(ul);
 
         return body;
     }
