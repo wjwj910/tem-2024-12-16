@@ -4,6 +4,7 @@ import com.ll.tem.domain.post.post.entity.Post;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,7 +92,7 @@ public class PostController {
     }
 
     @PostMapping("/write")
-    public String write(
+    public ResponseEntity<String> write(
             @Valid PostWriteForm form,
             BindingResult bindingResult
     ) {
@@ -103,11 +104,9 @@ public class PostController {
                     .map(message -> message.split("-", 2)[1])
                     .collect(Collectors.joining("<br>"));
 
-            return getFormHtml(
-                    errorMessages,
-                    form.title,
-                    form.content
-            );
+            return ResponseEntity
+                    .badRequest() // 400
+                    .body(getFormHtml(errorMessages, form.title, form.content));
         }
         posts.add(
                 Post.builder()
@@ -115,6 +114,10 @@ public class PostController {
                         .content(form.content)
                         .build()
         );
-        return "redirect:/posts";
+
+        return ResponseEntity
+                .status(302) // 다른 곳으로 즉시 이동하시오.
+                .header("Location", "/posts")
+                .build();
     }
 }
