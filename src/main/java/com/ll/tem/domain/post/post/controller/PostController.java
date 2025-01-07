@@ -27,6 +27,14 @@ public class PostController {
             String title,
             String content
     ) {
+        if (title == null || title.isBlank()) {
+            return "제목을 입력하세요";
+        }
+
+        if (content == null || content.isBlank()) {
+            return "내용을 입력하세요";
+        }
+
         return """
                 <h1>글쓰기 완료</h1>
                 
