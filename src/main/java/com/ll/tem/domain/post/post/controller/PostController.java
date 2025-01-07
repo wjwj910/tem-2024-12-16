@@ -13,7 +13,7 @@ public class PostController {
     @ResponseBody
     public String showWrite() {
         return """
-                <form action="/posts/doWrite" method="POST">
+                <form action="/posts/write" method="POST">
                     <input type="text" name="title" placeholder="제목">
                     <textarea name="content" placeholder="내용"></textarea>
                     <button type="submit">글쓰기</button>
@@ -21,7 +21,7 @@ public class PostController {
                 """;
     }
 
-    @PostMapping("/doWrite")
+    @PostMapping("/write")
     @ResponseBody
     public String write(
             String title,
