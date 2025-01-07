@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/posts")
 public class PostController {
@@ -54,8 +56,13 @@ public class PostController {
             BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
+            String errorMessages = bindingResult.getAllErrors()
+                    .stream()
+                    .map(error -> error.getDefaultMessage())
+                    .collect(Collectors.joining("<br>"));
+
             return getFormHtml(
-                    bindingResult.getFieldError().getDefaultMessage(),
+                    errorMessages,
                     form.getTitle(),
                     form.getContent()
             );
